@@ -123,7 +123,7 @@ class zabbix::agent (
     # sudoers for puppet mdadm
     sudo::conf { 'zabbix-backuppc':
       priority => 20,
-      content  => 'zabbix ALL=(backuppc) NOPASSWD: /etc/zabbix/custom-scripts.d/backuppc-data.pl *\n',
+      content  => 'zabbix ALL=(backuppc) NOPASSWD: /etc/zabbix/custom-scripts.d/backuppc-data.pl *',
     }
   }
   else

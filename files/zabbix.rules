@@ -1,0 +1,6 @@
+*filter
+
+# tcp port 10050 10051
+-A INPUT -p tcp --dport 10050:10051 -j ACCEPT -m comment --comment "zabbix"
+
+COMMIT

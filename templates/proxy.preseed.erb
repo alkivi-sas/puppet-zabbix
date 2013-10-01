@@ -1,0 +1,43 @@
+# MySQL administrative password
+zabbix-proxy-mysql  zabbix-proxy-mysql/mysql/admin-user string  root
+zabbix-proxy-mysql  zabbix-proxy-mysql/mysql/admin-pass password MYSQLADMIN
+
+# MySQL application password for zabbix-proxy-mysql:
+zabbix-proxy-mysql  zabbix-proxy-mysql/db/app-user  string  zabbix
+zabbix-proxy-mysql  zabbix-proxy-mysql/mysql/app-pass password ZABBIXPASSWD 
+zabbix-proxy-mysql  zabbix-proxy-mysql/app-password-confirm password   ZABBIXPASSWD
+zabbix-proxy-mysql  zabbix-proxy-mysql/password-confirm password   ZABBIXPASSWD 
+
+# Perform upgrade on database for zabbix-proxy-mysql with dbconfig-common?
+zabbix-proxy-mysql  zabbix-proxy-mysql/dbconfig-upgrade boolean true
+
+# Deconfigure database for zabbix-proxy-mysql with dbconfig-common?
+zabbix-proxy-mysql  zabbix-proxy-mysql/dbconfig-remove  boolean false
+zabbix-proxy-mysql  zabbix-proxy-mysql/internal/reconfiguring   boolean false
+
+# Configure database for zabbix-proxy-mysql with dbconfig-common?
+zabbix-proxy-mysql  zabbix-proxy-mysql/dbconfig-install boolean true
+
+# What do you want to do about modified configuration file zabbix_proxy.conf?
+# Database type to be used by zabbix-proxy-mysql:
+zabbix-proxy-mysql  zabbix-proxy-mysql/database-type    select  mysql
+
+# Do you want to back up the database for zabbix-proxy-mysql before upgrading?
+zabbix-proxy-mysql  zabbix-proxy-mysql/upgrade-backup   boolean true
+
+# Connection method for MySQL database of zabbix-proxy-mysql:
+zabbix-proxy-mysql  zabbix-proxy-mysql/mysql/method select  unix socket
+
+# Host running the MySQL server for zabbix-proxy-mysql:
+zabbix-proxy-mysql  zabbix-proxy-mysql/remote/newhost   string
+
+# MySQL database name for zabbix-proxy-mysql:
+zabbix-proxy-mysql  zabbix-proxy-mysql/db/dbname    string  zabbix
+
+# Reinstall database for zabbix-proxy-mysql?
+zabbix-proxy-mysql  zabbix-proxy-mysql/dbconfig-reinstall   boolean false
+zabbix-proxy-mysql  zabbix-proxy-mysql/internal/skip-preseed    boolean false
+zabbix-proxy-mysql  zabbix-proxy-mysql/missing-db-package-error select  abort
+
+# Do you want to purge the database for zabbix-proxy-mysql?
+zabbix-proxy-mysql  zabbix-proxy-mysql/purge    boolean false

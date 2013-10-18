@@ -1,12 +1,12 @@
 # MySQL administrative password
 zabbix-proxy-mysql  zabbix-proxy-mysql/mysql/admin-user string  root
-zabbix-proxy-mysql  zabbix-proxy-mysql/mysql/admin-pass password MYSQLADMIN
+zabbix-proxy-mysql  zabbix-proxy-mysql/mysql/admin-pass password <%= @admin_password %>
 
 # MySQL application password for zabbix-proxy-mysql:
 zabbix-proxy-mysql  zabbix-proxy-mysql/db/app-user  string  zabbix
-zabbix-proxy-mysql  zabbix-proxy-mysql/mysql/app-pass password ZABBIXPASSWD 
-zabbix-proxy-mysql  zabbix-proxy-mysql/app-password-confirm password   ZABBIXPASSWD
-zabbix-proxy-mysql  zabbix-proxy-mysql/password-confirm password   ZABBIXPASSWD 
+zabbix-proxy-mysql  zabbix-proxy-mysql/mysql/app-pass password <%= @zabbix_password %>
+zabbix-proxy-mysql  zabbix-proxy-mysql/app-password-confirm password <%= @zabbix_password %>  
+zabbix-proxy-mysql  zabbix-proxy-mysql/password-confirm password   <%= @zabbix_password %>
 
 # Perform upgrade on database for zabbix-proxy-mysql with dbconfig-common?
 zabbix-proxy-mysql  zabbix-proxy-mysql/dbconfig-upgrade boolean true

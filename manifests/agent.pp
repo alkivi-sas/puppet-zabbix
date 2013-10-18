@@ -74,8 +74,8 @@ class zabbix::agent (
 
     # sudoers for puppet smartctl
     sudo::conf { 'zabbix-smartctl':
-    priority => 20,
-    content  => "zabbix ALL=(ALL) NOPASSWD: /usr/sbin/smartctl -A /dev/*\n",
+      priority => 20,
+      content  => "zabbix ALL=(ALL) NOPASSWD: /usr/sbin/smartctl -A /dev/*\n",
     }
   }
 

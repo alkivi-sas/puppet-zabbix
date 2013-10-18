@@ -1,5 +1,5 @@
 name    'alkivi-zabbix'
-version '0.0.1'
+version '0.0.2'
 source 'https://github.com/alkivi-sas/puppet-zabbix'
 author 'alkivi'
 license 'LGPLv3'
@@ -8,3 +8,4 @@ description 'Setup Zabbix Server, Proxy or Agent with several custom agent param
 project_page 'https://github.com/alkivi-sas/puppet-zabbix'
 dependency 'puppetlabs/stdlib', '>3.x'
 dependency 'alkivi/mysql', '>0.x'
+dependency 'alkivi/alkivi_base', '>0.x'

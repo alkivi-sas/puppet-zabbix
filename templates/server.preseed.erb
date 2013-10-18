@@ -1,8 +1,8 @@
 # MySQL application password for zabbix-server-mysql:
-zabbix-server-mysql     zabbix-server-mysql/mysql/admin-pass    MYSQLADMIN
-zabbix-server-mysql     zabbix-server-mysql/mysql/app-pass      ZABBIXPASSWD
-zabbix-server-mysql     zabbix-server-mysql/password-confirm    ZABBIXPASSWD
-zabbix-server-mysql     zabbix-server-mysql/app-password-confirm        ZABBIXPASSWD
+zabbix-server-mysql     zabbix-server-mysql/mysql/admin-pass    <%= @admin_password %>
+zabbix-server-mysql     zabbix-server-mysql/mysql/app-pass      <%= @zabbix_password %>
+zabbix-server-mysql     zabbix-server-mysql/password-confirm    <%= @zabbix_password %>
+zabbix-server-mysql     zabbix-server-mysql/app-password-confirm        <%= @zabbix_password %>
 zabbix-server-mysql     zabbix-server-mysql/upgrade-error       select  abort
 
 # Reinstall database for zabbix-server-mysql?

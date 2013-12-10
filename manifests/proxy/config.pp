@@ -27,6 +27,11 @@ class zabbix::proxy::config ()
     notify   => Class['zabbix::proxy::service'],
   }
 
+  file { '/var/run/zabbix-proxy':
+    ensure => directory,
+    mode   => '0750',
+  }
+
   file { '/var/log/zabbix-proxy':
     ensure => directory,
     mode   => '0750',

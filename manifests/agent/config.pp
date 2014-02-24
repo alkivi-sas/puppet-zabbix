@@ -15,4 +15,12 @@ class zabbix::agent::config () {
     ensure => directory,
     mode   => '0750',
   }
+
+  if($zabbix::agent::firewall)
+  {
+    alkivi_base::firewall_rule{ 'zabbix-agent':
+      dest_port => 10050,
+      priority  => 30,
+    }
+  }
 }

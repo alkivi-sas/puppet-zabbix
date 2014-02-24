@@ -21,7 +21,7 @@ class zabbix::proxy (
   $trapperTimeout          = '5',
   $unreachablePeriod       = '45',
   $unavailableDelay        = '60',
-  $pidFile                 = '/var/run/zabbix-proxy/zabbix_proxy.pid',
+  $pidFile                 = '/var/run/zabbix/zabbix_proxy.pid',
   $logFile                 = '/var/log/zabbix-proxy/zabbix_proxy.log',
   $alertScriptsPath        = '/home/alkivi/zabbix/alert-scripts/',
   $externalScripts         = '/home/alkivi/zabbix/external-scripts',
@@ -32,7 +32,7 @@ class zabbix::proxy (
   $dBHost                  = 'localhost',
   $dBName                  = 'zabbix',
   $dBUser                  = 'zabbix',
-  $dBPassword              = 'CHANGEME',
+  $dBPassword              = alkivi_password('zabbix', 'db'),
 
   $sourceIp                = undef,
   $listenIp                = undef,

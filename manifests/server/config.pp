@@ -6,17 +6,13 @@ class zabbix::server::config () {
     mode   => '0640',
   }
 
-  file { '/etc/zabbix/zabbix_server.conf.temp':
+  file { '/etc/zabbix/zabbix_server.conf':
     content => template('zabbix/zabbix_server.conf.erb'),
+    notify  => Service[$zabbix::server::params::service_name],
   }
 
-  # Fix password
-  exec { '/etc/zabbix/zabbix_server.conf.password':
-    command  => 'PASSWORD=`cat /root/.passwd/db/zabbix` && sed \'s/CHANGEME/\'\$PASSWORD\'/\' /etc/zabbix/zabbix_server.conf.temp > /etc/zabbix/zabbix_server.conf && touch /etc/zabbix/zabbix_server.conf.ok',
-    provider => 'shell',
-    creates  => '/etc/zabbix/zabbix_server.conf.ok',
-    path     => ['/bin', '/sbin', '/usr/bin', '/root/alkivi-scripts/'],
-    require  => File['/etc/zabbix/zabbix_server.conf.temp'],
-    notify   => Class['zabbix::server::service'],
+  file { '/var/log/zabbix-server':
+    ensure => directory,
+    mode   => '0750',
   }
 }

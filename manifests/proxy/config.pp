@@ -13,18 +13,9 @@ class zabbix::proxy::config ()
     notify  => Service['alkivi-iptables'],
   }
 
-  file { '/etc/zabbix/zabbix_proxy.conf.temp':
+  file { '/etc/zabbix/zabbix_proxy.conf':
     content => template('zabbix/zabbix_proxy.conf.erb'),
-  }
-
-  # Fix password
-  exec { '/etc/zabbix/zabbix_proxy.conf.password':
-    command  => 'PASSWORD=`cat /root/.passwd/db/zabbix` && sed \'s/CHANGEME/\'\$PASSWORD\'/\' /etc/zabbix/zabbix_proxy.conf.temp > /etc/zabbix/zabbix_proxy.conf && touch /etc/zabbix/zabbix_proxy.conf.ok',
-    provider => 'shell',
-    creates  => '/etc/zabbix/zabbix_proxy.conf.ok',
-    path     => ['/bin', '/sbin', '/usr/bin', '/root/alkivi-scripts/'],
-    require  => File['/etc/zabbix/zabbix_proxy.conf.temp'],
-    notify   => Class['zabbix::proxy::service'],
+    notify  => Service[$zabbix::proxy::params::service_name],
   }
 
   file { '/var/run/zabbix-proxy':

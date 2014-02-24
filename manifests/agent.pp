@@ -1,5 +1,6 @@
 class zabbix::agent (
   $hostname,
+  $pidFile      = '/var/run/zabbix/zabbix_agentd.pid',
   $logFile      = '/var/log/zabbix-agent/zabbix_agent.log',
   $logFileSize  = undef,
   $debugLevel   = '3',
@@ -11,6 +12,7 @@ class zabbix::agent (
   $backuppc     = false,
   $ups          = false,
   $motd         = true,
+  $firewall     = true,
 ) {
 
 

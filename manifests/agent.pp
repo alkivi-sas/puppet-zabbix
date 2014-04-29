@@ -11,6 +11,7 @@ class zabbix::agent (
   $smart        = true,
   $backuppc     = false,
   $ups          = false,
+  $hwraid       = false,
   $motd         = true,
   $firewall     = true,
 ) {
@@ -145,6 +146,24 @@ class zabbix::agent (
     file { '/etc/zabbix/zabbix_agentd.conf.d/ups.conf':
       source  => 'puppet:///modules/zabbix/ups.conf',
       require => File['/etc/zabbix/zabbix_agentd.conf.d/'],
+    }
+  }
+
+  if($hwraid)
+  {
+    file { '/etc/zabbix/custom-scripts.d/sas-raid-data.pl':
+      source  => 'puppet:///modules/zabbix/sas-raid-data.pl',
+      require => File['/etc/zabbix/custom-scripts.d/'],
+    }
+
+    file { '/etc/zabbix/zabbix_agentd.conf.d/hwraid.conf':
+      source  => 'puppet:///modules/zabbix/hwraid.conf',
+      require => File['/etc/zabbix/zabbix_agentd.conf.d/'],
+    }
+
+    sudo::conf { 'zabbix-hwraid':
+      priority => 20,
+      content  => 'zabbix ALL=(ALL) NOPASSWD: /etc/zabbix/custom-scripts.d/sas-raid-data.pl *',
     }
   }
 

@@ -14,6 +14,8 @@ class zabbix::agent (
   $hwraid       = false,
   $motd         = true,
   $firewall     = true,
+  $nginx        = false,
+  $php_fpm      = false,
 ) {
 
 
@@ -138,6 +140,32 @@ class zabbix::agent (
     file { '/etc/zabbix/zabbix_agentd.conf.d/mysql.conf':
       source  => 'puppet:///modules/zabbix/mysql.conf',
       require => File['/etc/zabbix/zabbix_agentd.conf.d/'],
+    }
+  }
+
+  if($nginx)
+  {
+    file { '/etc/zabbix/zabbix_agentd.conf.d/nginx.conf':
+      source  => 'puppet:///modules/zabbix/nginx.conf',
+      require => File['/etc/zabbix/zabbix_agentd.conf.d/'],
+    }
+
+    file { '/etc/zabbix/custom-scripts.d/nginx-check.sh':
+      source  => 'puppet:///modules/zabbix/nginx-check.sh',
+      require => File['/etc/zabbix/custom-scripts.d/'],
+    }
+  }
+
+  if($php_fpm)
+  {
+    file { '/etc/zabbix/zabbix_agentd.conf.d/php-fpm.conf':
+      source  => 'puppet:///modules/zabbix/php-fpm.conf',
+      require => File['/etc/zabbix/zabbix_agentd.conf.d/'],
+    }
+
+    file { '/etc/zabbix/custom-scripts.d/php-fpm-check.sh':
+      source  => 'puppet:///modules/zabbix/php-fpm-check.sh',
+      require => File['/etc/zabbix/custom-scripts.d/'],
     }
   }
 

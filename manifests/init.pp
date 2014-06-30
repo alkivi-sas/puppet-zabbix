@@ -6,6 +6,7 @@ class zabbix () {
     release    => 'wheezy',
     key        => '79EA5ED4',
     key_source => 'http://repo.zabbix.com/zabbix-official-repo.key',
+    before     => Class['zabbix::agent'],
   }
 }
 

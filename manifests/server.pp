@@ -16,6 +16,7 @@ class zabbix::server (
   $startPingers            = '1',
   $startDiscoverers        = '1',
   $startHTTPPollers        = '1',
+  $startTimers             = '1',
   $listenIp                = undef,
   $housekeepingFrequency   = '1',
   $maxHousekeeperDelete    = '500',

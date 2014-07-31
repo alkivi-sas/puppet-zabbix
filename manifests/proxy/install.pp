@@ -23,7 +23,7 @@ class zabbix::proxy::install () {
   }
 
   package { $zabbix::proxy::params::package_name:
-    ensure       => installed,
+    ensure       => latest,
     responsefile => '/root/preseed/zabbix-proxy.preseed',
     require      => [Mysql::Database['zabbix'], File['/root/preseed/zabbix-proxy.preseed'] ],
   }

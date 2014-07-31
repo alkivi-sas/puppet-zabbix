@@ -23,7 +23,7 @@ class zabbix::server::install () {
   }
 
   package { $zabbix::server::params::package_name:
-    ensure       => installed,
+    ensure       => latest,
     responsefile => '/root/preseed/zabbix-server.preseed',
     require      => [Mysql::Database['zabbix'], File['/root/preseed/zabbix-server.preseed'] ],
   }

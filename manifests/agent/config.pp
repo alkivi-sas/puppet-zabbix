@@ -1,4 +1,15 @@
-class zabbix::agent::config () {
+class zabbix::agent::config (
+    $pidFile        = $zabbix::agent::pidFile,
+    $logFile        = $zabbix::agent::logFile,
+    $logFileSize    = $zabbix::agent::logFileSize,
+    $debugLevel     = $zabbix::agent::debugLevel,
+    $server         = $zabbix::agent::server,
+    $serverActive   = $zabbix::agent::serverActive,
+    $hostname       = $zabbix::agent::hostname,
+    $raidParameter  = $zabbix::agent::raidParameter,
+    $mysqlParameter = $zabbix::agent::mysqlParameter,
+    $smartParameter = $zabbix::agent::smartParameter,
+) {
   File {
     ensure => present,
     owner  => 'zabbix',

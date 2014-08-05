@@ -2,7 +2,6 @@
 # To get more information about Zabbix,
 # visit http://www.zabbix.com
 
-
 ############ GENERAL PARAMETERS #################
 
 ### Option: NodeID
@@ -28,7 +27,7 @@ ListenPort=<%= @listenPort %>
 # Mandatory: no
 # Default:
 # SourceIP=
-<% if @sourceIP %>#SourceIP=<%= @sourceIP %><% end %>
+<% if @sourceIp %>SourceIP=<%= @sourceIp %><% end %>
 
 ### Option: LogFile
 #	Name of log file.
@@ -47,6 +46,7 @@ LogFile=<%= @logFile %>
 # Mandatory: no
 # Range: 0-1024
 # Default:
+# LogFileSize=1
 <% if @logFileSize %>LogFileSize=<%= @logFileSize %><% end %>
 
 ### Option: DebugLevel
@@ -198,6 +198,17 @@ StartDiscoverers=<%= @startDiscoverers %>
 # StartHTTPPollers=1
 StartHTTPPollers=<%= @startHTTPPollers %>
 
+### Option: StartTimers
+#	Number of pre-forked instances of timers.
+#	Timers process time-based trigger functions and maintenance periods.
+#	Only the first timer process handles the maintenance periods.
+#
+# Mandatory: no
+# Range: 1-1000
+# Default:
+# StartTimers=1
+StartTimers=<%= @startTimers%>
+
 ### Option: JavaGateway
 #	IP address (or hostname) of Zabbix Java gateway.
 #	Only required if Java pollers are started.
@@ -221,6 +232,32 @@ StartHTTPPollers=<%= @startHTTPPollers %>
 # Range: 0-1000
 # Default:
 # StartJavaPollers=0
+
+### Option: StartVMwareCollectors
+#	Number of pre-forked vmware collector instances.
+#
+# Mandatory: no
+# Range: 0-250
+# Default:
+# StartVMwareCollectors=0
+
+### Option: VMwareFrequency
+#	How often Zabbix will connect to VMware service to obtain a new data.
+#
+# Mandatory: no
+# Range: 10-86400
+# Default:
+# VMwareFrequency=60
+
+### Option: VMwareCacheSize
+#	Size of VMware cache, in bytes.
+#	Shared memory size for storing VMware data.
+#	Only used if VMware collectors are started.
+#
+# Mandatory: no
+# Range: 256K-2G
+# Default:
+# VMwareCacheSize=8M
 
 ### Option: SNMPTrapperFile
 #	Temporary file used for passing data from SNMP trap daemon to the server.
@@ -247,7 +284,7 @@ StartHTTPPollers=<%= @startHTTPPollers %>
 # ListenIP=0.0.0.0
 
 # ListenIP=127.0.0.1
-<% if @listenIP %>#ListenIP=<%= @listenIP %><% end %>
+<% if @listenIp %>ListenIP=<%= @listenIp %><% end %>
 
 ### Option: HousekeepingFrequency
 #	How often Zabbix will perform housekeeping procedure (in hours).
@@ -273,15 +310,6 @@ HousekeepingFrequency=<%= @housekeepingFrequency %>
 # MaxHousekeeperDelete=500
 MaxHousekeeperDelete=<%= @maxHousekeeperDelete %>
 
-### Option: DisableHousekeeping
-#	If set to 1, disables housekeeping.
-#
-# Mandatory: no
-# Range: 0-1
-# Default:
-# DisableHousekeeping=0
-DisableHousekeeping=<%= @disableHousekeeping %>
-
 ### Option: SenderFrequency
 #	How often Zabbix will try to send unsent alerts (in seconds).
 #
@@ -296,7 +324,7 @@ SenderFrequency=<%= @senderFrequency %>
 #	Shared memory size for storing host, item and trigger data.
 #
 # Mandatory: no
-# Range: 128K-2G
+# Range: 128K-8G
 # Default:
 CacheSize=<%= @cacheSize %>
 
@@ -347,6 +375,16 @@ TrendCacheSize=<%= @trendCacheSize %>
 # Default:
 # HistoryTextCacheSize=16M
 HistoryTextCacheSize=<%= @historyTextCacheSize %>
+
+### Option: ValueCacheSize
+#	Size of history value cache, in bytes.
+#	Shared memory size for caching item history data requests
+#	Setting to 0 disables value cache.
+#
+# Mandatory: no
+# Range: 0,128K-64G
+# Default:
+# ValueCacheSize=8M
 
 ### Option: NodeNoEvents
 #	If set to '1' local events won't be sent to master node.
@@ -471,17 +509,6 @@ Fping6Location=<%= @fping6Location %>
 # Default:
 # TmpDir=/tmp
 
-### Option: Include
-#	You may include individual files or all files in a directory in the configuration file.
-#	Installing Zabbix will create include directory in /usr/local/etc, unless modified during the compile time.
-#
-# Mandatory: no
-# Default:
-# Include=
-
-# Include=/usr/local/etc/zabbix_server.general.conf
-# Include=/usr/local/etc/zabbix_server.conf.d/
-
 ### Option: StartProxyPollers
 #	Number of pre-forked instances of pollers for passive proxies.
 #
@@ -507,3 +534,44 @@ Fping6Location=<%= @fping6Location %>
 # Range: 1-3600
 # Default:
 # ProxyDataFrequency=1
+
+### Option: AllowRoot
+#	Allow the server to run as 'root'. If disabled and the server is started by 'root', the server
+#	will try to switch to user 'zabbix' instead. Has no effect if started under a regular user.
+#	0 - do not allow
+#	1 - allow
+#
+# Mandatory: no
+# Default:
+# AllowRoot=0
+
+### Option: Include
+#	You may include individual files or all files in a directory in the configuration file.
+#	Installing Zabbix will create include directory in /usr/local/etc, unless modified during the compile time.
+#
+# Mandatory: no
+# Default:
+# Include=
+
+# Include=/usr/local/etc/zabbix_server.general.conf
+# Include=/usr/local/etc/zabbix_server.conf.d/
+
+####### LOADABLE MODULES #######
+
+### Option: LoadModulePath
+#	Full path to location of server modules.
+#	Default depends on compilation options.
+#
+# Mandatory: no
+# Default:
+# LoadModulePath=${libdir}/modules
+
+### Option: LoadModule
+#	Module to load at server startup. Modules are used to extend functionality of the server.
+#	Format: LoadModule=<module.so>
+#	The modules must be located in directory specified by LoadModulePath.
+#	It is allowed to include multiple LoadModule parameters.
+#
+# Mandatory: no
+# Default:
+# LoadModule=

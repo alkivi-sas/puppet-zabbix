@@ -20,7 +20,6 @@ class zabbix::server (
   $listenIp                = undef,
   $housekeepingFrequency   = '1',
   $maxHousekeeperDelete    = '500',
-  $disableHousekeeping     = '0',
   $senderFrequency         = '30',
   $cacheSize               = '8M',
   $cacheUpdateFrequency    = '60',

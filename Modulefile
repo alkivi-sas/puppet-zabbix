@@ -8,5 +8,5 @@ description 'Setup Zabbix Server, Proxy or Agent with several custom agent param
 project_page 'https://github.com/alkivi-sas/puppet-zabbix'
 dependency 'puppetlabs/stdlib', '>3.x'
 dependency 'puppetlabs/apt', '>=1.4.2'
-dependency 'alkivi/mysql', '>0.x'
+dependency 'puppetlabs/mysql', '>2.x'
 dependency 'alkivi/alkivi_base', '>0.x'

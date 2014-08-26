@@ -1,7 +1,7 @@
 class zabbix::proxy::install () {
-  mysql::database{ 'zabbix':
-    user    => 'zabbix',
-    require => Class['mysql'],
+  mysql::db { 'zabbix':
+    user     => 'zabbix',
+    password => alkivi_password('zabbix', 'db'),
   }
 
   if(! defined(File['/root/preseed/']))
@@ -25,6 +25,6 @@ class zabbix::proxy::install () {
   package { $zabbix::proxy::params::package_name:
     ensure       => latest,
     responsefile => '/root/preseed/zabbix-proxy.preseed',
-    require      => [Mysql::Database['zabbix'], File['/root/preseed/zabbix-proxy.preseed'] ],
+    require      => [Mysql::Db['zabbix'], File['/root/preseed/zabbix-proxy.preseed'] ],
   }
 }

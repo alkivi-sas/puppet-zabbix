@@ -45,10 +45,7 @@ def fetchURL(url, user = None, passwd = None):
 
 def sendValues(filepath, zabbixserver = "localhost", zabbixport = 10051, senderloc = "zabbix_sender"):
     command = "%s --zabbix-server '%s' --port '%s' -i '%s' -vv" % (senderloc, zabbixserver, zabbixport, filepath)
-    print command
     r = os.system("%s --zabbix-server '%s' --port '%s' -i '%s' -vv" % (senderloc, zabbixserver, zabbixport, filepath))
-    print r
-    print 'return of r: %s' % r
     if r != 0:
         raise ErrorSendingValues, "An error occured sending the values to the server"
 
@@ -198,14 +195,12 @@ if __name__ == "__main__":
         tempfile = open(tempfilepath, 'wb')
     except:
         parser.error("Error creating temporary file")
-    print 'temp created'
 
     try:
         try:
             data = parse(data = data)
         except csv.Error:
             parser.error("Error parsing returned data")
-        print 'data parsed'
 
 #        disc={}
 
@@ -233,13 +228,11 @@ if __name__ == "__main__":
             tempfile.close()
         except "bogus":
             parser.error("Error creating the file to send")
-        print 'file created'
 
         try:
             sendValues(filepath = tempfilepath, zabbixserver = opts.zabbixserver, zabbixport = opts.zabbixport, senderloc = opts.senderloc)
         except ErrorSendingValues:
             parser.error("An error occurred while sending values to the Zabbix server")
-        print 'stat send'
 
     finally:
         try:

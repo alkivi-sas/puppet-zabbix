@@ -18,6 +18,7 @@ class zabbix::agent (
   $postgresql   = false,
   $php_fpm      = false,
   $uwsgi        = false,
+  $haproxy      = false,
 ) {
 
 
@@ -226,6 +227,19 @@ class zabbix::agent (
     sudo::conf { 'zabbix-hwraid':
       priority => 20,
       content  => 'zabbix ALL=(ALL) NOPASSWD: /etc/zabbix/custom-scripts.d/sas-raid-data.pl *',
+    }
+  }
+
+  if($haproxy)
+  {
+    file { '/etc/zabbix/custom-scripts.d/haproxy-data.py':
+      source  => 'puppet:///modules/zabbix/haproxy-data.py',
+      require => File['/etc/zabbix/custom-scripts.d/'],
+    }
+
+    file { '/etc/zabbix/custom-scripts.d/haproxy-discovery.py':
+      source  => 'puppet:///modules/zabbix/haproxy-discovery.py',
+      require => File['/etc/zabbix/custom-scripts.d/'],
     }
   }
 

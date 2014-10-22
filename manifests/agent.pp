@@ -15,7 +15,9 @@ class zabbix::agent (
   $motd         = true,
   $firewall     = true,
   $nginx        = false,
+  $postgresql   = false,
   $php_fpm      = false,
+  $uwsgi        = false,
 ) {
 
 
@@ -27,8 +29,9 @@ class zabbix::agent (
   if(! defined(Class['zabbix']))
   {
     class{ 'zabbix': }
-    Class['zabbix'] -> Class['zabbix::agent']
   }
+
+  Class['zabbix'] -> Class['zabbix::agent']
 
   # declare all parameterized classes
   class { 'zabbix::agent::params': }
@@ -143,6 +146,24 @@ class zabbix::agent (
     }
   }
 
+  if($postgresql)
+  {
+    file { '/etc/zabbix/zabbix_agentd.conf.d/postgresql.conf':
+      source  => 'puppet:///modules/zabbix/postgresql.conf',
+      require => File['/etc/zabbix/zabbix_agentd.conf.d/'],
+    }
+
+    file { '/etc/zabbix/custom-scripts.d/postgresql-data.sh':
+      source  => 'puppet:///modules/zabbix/postgresql-data.sh',
+      require => File['/etc/zabbix/custom-scripts.d/'],
+    }
+
+    file { '/etc/zabbix/custom-scripts.d/postgresql-discovery.sh':
+      source  => 'puppet:///modules/zabbix/postgresql-discovery.sh',
+      require => File['/etc/zabbix/custom-scripts.d/'],
+    }
+  }
+
   if($nginx)
   {
     file { '/etc/zabbix/zabbix_agentd.conf.d/nginx.conf':
@@ -165,6 +186,19 @@ class zabbix::agent (
 
     file { '/etc/zabbix/custom-scripts.d/php-fpm-check.sh':
       source  => 'puppet:///modules/zabbix/php-fpm-check.sh',
+      require => File['/etc/zabbix/custom-scripts.d/'],
+    }
+  }
+
+  if($uwsgi)
+  {
+    file { '/etc/zabbix/zabbix_agentd.conf.d/uwsgi.conf':
+      source  => 'puppet:///modules/zabbix/uwsgi.conf',
+      require => File['/etc/zabbix/zabbix_agentd.conf.d/'],
+    }
+
+    file { '/etc/zabbix/custom-scripts.d/uwsgi-data.py':
+      source  => 'puppet:///modules/zabbix/uwsgi-data.py',
       require => File['/etc/zabbix/custom-scripts.d/'],
     }
   }

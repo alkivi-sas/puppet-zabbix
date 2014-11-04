@@ -239,5 +239,5 @@ if __name__ == "__main__":
             tempfile.close()
         except:
             pass
-        #os.remove(tempfilepath)
+        os.remove(tempfilepath)
 

@@ -124,6 +124,11 @@ class zabbix::agent (
       require => File['/etc/zabbix/custom-scripts.d/'],
     }
 
+    file { '/etc/zabbix/custom-scripts.d/backuppc-hosts.pl':
+      source  => 'puppet:///modules/zabbix/backuppc-hosts.pl',
+      require => File['/etc/zabbix/custom-scripts.d/'],
+    }
+
     file { '/etc/zabbix/zabbix_agentd.conf.d/backuppc.conf':
       source  => 'puppet:///modules/zabbix/backuppc.conf',
       require => File['/etc/zabbix/zabbix_agentd.conf.d/'],
@@ -133,6 +138,11 @@ class zabbix::agent (
     sudo::conf { 'zabbix-backuppc':
       priority => 20,
       content  => 'zabbix ALL=(backuppc) NOPASSWD: /etc/zabbix/custom-scripts.d/backuppc-data.pl *',
+    }
+
+    sudo::conf { 'zabbix-backuppc-hosts':
+      priority => 20,
+      content  => 'zabbix ALL=(backuppc) NOPASSWD: /etc/zabbix/custom-scripts.d/backuppc-hosts.pl *',
     }
   }
   else

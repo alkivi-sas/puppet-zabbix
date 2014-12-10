@@ -411,9 +411,8 @@ foreach my $host(keys %$hash)
 }
 close $fh;
 send_to_zabbix( filename => $filename, zabbixserver => $zabbixserver, zabbixport => $zabbixport);
-#unlink $filename;
-
-return 0;
+unlink $filename;
+exit(0);
 
 
 
